@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+            
+>>>>>>> 2c1c8079d46c9f69a1ea78531de0ce42d2091d4a
 
 import os
 import sys
