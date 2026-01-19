@@ -82,5 +82,5 @@ def predict_datapoint():
         return render_template('home.html', results=final_result)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
-print("DEPLOY CHECK FROM AWS")
+    print("DEPLOY CHECK FROM AWS")
+    app.run(host="0.0.0.0", port=5000, debug=False)
