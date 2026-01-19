@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 <body>
     <div class="login">
        <h1>Student Exam Performance Indicator</h1>
@@ -108,4 +108,270 @@
        THE  prediction is {{results}}
     </h2>
    <body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Exam Performance Indicator</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .app-card {
+            width: 560px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(18px);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 14px;
+            display: block;
+            opacity: 0.9;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        select option {
+            color: #000;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,114,255,0.5);
+        }
+
+        .error-box {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ffdede;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        /* RESULT SECTION */
+        .result-card {
+            margin-top: 35px;
+            padding: 30px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-title {
+            font-size: 15px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .score {
+            font-size: 64px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .score span {
+            font-size: 22px;
+            opacity: 0.8;
+        }
+
+        .progress {
+            height: 12px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 18px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffd5, #00ff9d);
+            border-radius: 20px;
+            transition: width 0.8s ease;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 7px 22px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .pass {
+            background: #00ff9d;
+            color: #003d2f;
+        }
+
+        .fail {
+            background: #ff6b6b;
+            color: #3d0000;
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 11px;
+            opacity: 0.75;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app-card">
+
+    <div class="title">Student Exam Performance</div>
+    <div class="subtitle">AI-based Maths Score Prediction System</div>
+
+    {% if error %}
+    <div class="error-box">{{ error }}</div>
+    {% endif %}
+
+    <form action="{{ url_for('predict_datapoint') }}" method="post">
+
+        <label>Gender</label>
+        <select name="gender" required>
+            <option disabled selected>Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label>Race / Ethnicity</label>
+        <select name="ethnicity" required>
+            <option disabled selected>Select</option>
+            <option value="group A">Group A</option>
+            <option value="group B">Group B</option>
+            <option value="group C">Group C</option>
+            <option value="group D">Group D</option>
+            <option value="group E">Group E</option>
+        </select>
+
+        <label>Parental Education</label>
+        <select name="parental_level_of_education" required>
+            <option disabled selected>Select</option>
+            <option value="high school">High School</option>
+            <option value="some college">Some College</option>
+            <option value="associate's degree">Associate Degree</option>
+            <option value="bachelor's degree">Bachelor Degree</option>
+            <option value="master's degree">Master Degree</option>
+        </select>
+
+        <label>Lunch Type</label>
+        <select name="lunch" required>
+            <option disabled selected>Select</option>
+            <option value="standard">Standard</option>
+            <option value="free/reduced">Free / Reduced</option>
+        </select>
+
+        <label>Test Preparation</label>
+        <select name="test_preparation_course" required>
+            <option disabled selected>Select</option>
+            <option value="none">None</option>
+            <option value="completed">Completed</option>
+        </select>
+
+        <label>Reading Score</label>
+        <input type="number" name="reading_score" min="0" max="100" required>
+
+        <label>Writing Score</label>
+        <input type="number" name="writing_score" min="0" max="100" required>
+
+        <button type="submit">Predict Maths Score</button>
+    </form>
+
+    {% if results %}
+    <div class="result-card">
+        <div class="result-title">🎓 Approx Maths Score</div>
+
+        <div class="score">
+            {{ results }} <span>/ 100</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ results }}%;"></div>
+        </div>
+
+        {% if results >= 40 %}
+            <div class="status pass">PASS</div>
+        {% else %}
+            <div class="status fail">FAIL</div>
+        {% endif %}
+
+        <div class="footer-note">
+            Prediction generated using Machine Learning model
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
 </html>
